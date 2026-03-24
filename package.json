@@ -1,0 +1,8 @@
+{
+  "name": "car-agents",
+  "version": "1.0.0",
+  "description": "Multi-agent car finder powered by MercadoLibre + Claude",
+  "scripts": {
+    "dev": "vercel dev"
+  }
+}

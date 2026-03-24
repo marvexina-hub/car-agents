@@ -6,438 +6,132 @@
 <title>Car Agents</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@300;400&display=swap');
-
 :root {
-  --bg: #f5f2ee;
-  --ink: #1a1814;
-  --muted: #8a8580;
-  --border: #ddd9d3;
-  --surface: #ffffff;
-  --agent-a: #c8412a;
-  --agent-b: #2a6bc8;
-  --agent-c: #2a8f5a;
-  --agent-d: #8b5cf6;
-  --accent: #c8412a;
+  --bg: #f5f2ee; --ink: #1a1814; --muted: #8a8580; --border: #ddd9d3;
+  --surface: #ffffff; --agent-a: #c8412a; --agent-b: #2a6bc8;
+  --agent-c: #2a8f5a; --agent-d: #8b5cf6; --accent: #c8412a;
 }
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'DM Sans', sans-serif;
-  min-height: 100vh;
-}
-
-.page {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 48px 24px;
-}
-
-.masthead {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  border-bottom: 2px solid var(--ink);
-  padding-bottom: 16px;
-  margin-bottom: 40px;
-}
-
-.masthead h1 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 72px;
-  letter-spacing: 2px;
-  line-height: 1;
-}
-
-.masthead .sub {
-  font-size: 11px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-align: right;
-  line-height: 1.6;
-}
-
-.search-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 12px;
-}
-
+body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-serif; min-height: 100vh; }
+.page { max-width: 960px; margin: 0 auto; padding: 48px 24px; }
+.masthead { display: grid; grid-template-columns: 1fr auto; align-items: end; border-bottom: 2px solid var(--ink); padding-bottom: 16px; margin-bottom: 40px; }
+.masthead h1 { font-family: 'Bebas Neue', sans-serif; font-size: 72px; letter-spacing: 2px; line-height: 1; }
+.masthead .sub { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 3px; text-align: right; line-height: 1.6; }
+.search-form { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 12px; }
 .field { display: flex; flex-direction: column; gap: 6px; }
-
-.field label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.field input {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--ink);
-  font-family: 'DM Mono', monospace;
-  font-size: 13px;
-  padding: 10px 14px;
-  outline: none;
-  transition: border-color 0.15s;
-}
-
+.field label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--muted); font-weight: 500; }
+.field input { background: var(--surface); border: 1px solid var(--border); color: var(--ink); font-family: 'DM Mono', monospace; font-size: 13px; padding: 10px 14px; outline: none; transition: border-color 0.15s; }
 .field input:focus { border-color: var(--ink); }
-
-.prefs-row {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-.pref-chip {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  padding: 7px 14px;
-  cursor: pointer;
-  font-size: 12px;
-  color: var(--muted);
-  transition: all 0.15s;
-  user-select: none;
-}
-
+.prefs-row { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+.pref-chip { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); padding: 7px 14px; cursor: pointer; font-size: 12px; color: var(--muted); transition: all 0.15s; user-select: none; }
 .pref-chip input { display: none; }
-.pref-chip:has(input:checked) {
-  background: var(--ink);
-  color: white;
-  border-color: var(--ink);
-}
-
-.run-btn {
-  background: var(--accent);
-  color: white;
-  border: none;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 20px;
-  letter-spacing: 3px;
-  padding: 14px 40px;
-  cursor: pointer;
-  transition: background 0.15s;
-  display: block;
-  margin-bottom: 40px;
-}
-
+.pref-chip:has(input:checked) { background: var(--ink); color: white; border-color: var(--ink); }
+.run-btn { background: var(--accent); color: white; border: none; font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; padding: 14px 40px; cursor: pointer; transition: background 0.15s; display: block; margin-bottom: 40px; }
 .run-btn:hover { background: var(--ink); }
 .run-btn:disabled { background: var(--border); color: var(--muted); cursor: not-allowed; }
-
 .pipeline { display: none; margin-bottom: 40px; }
 .pipeline.visible { display: block; }
-
-.pipeline-label {
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  color: var(--muted);
-  margin-bottom: 16px;
-}
-
-.agents-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--border);
-  background: var(--surface);
-  margin-bottom: 24px;
-}
-
-.agent-card {
-  padding: 16px;
-  border-right: 1px solid var(--border);
-  opacity: 0.3;
-  transition: opacity 0.3s;
-}
-
+.pipeline-label { font-size: 10px; text-transform: uppercase; letter-spacing: 3px; color: var(--muted); margin-bottom: 16px; }
+.agents-row { display: grid; grid-template-columns: repeat(4, 1fr); border: 1px solid var(--border); background: var(--surface); margin-bottom: 24px; }
+.agent-card { padding: 16px; border-right: 1px solid var(--border); opacity: 0.3; transition: opacity 0.3s; }
 .agent-card:last-child { border-right: none; }
 .agent-card.active { opacity: 1; }
 .agent-card.done { opacity: 0.65; }
-
-.agent-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
+.agent-dot { width: 8px; height: 8px; border-radius: 50%; margin-bottom: 10px; }
 .agent-card:nth-child(1) .agent-dot { background: var(--agent-a); }
 .agent-card:nth-child(2) .agent-dot { background: var(--agent-b); }
 .agent-card:nth-child(3) .agent-dot { background: var(--agent-c); }
 .agent-card:nth-child(4) .agent-dot { background: var(--agent-d); }
-
-.agent-name {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 15px;
-  letter-spacing: 1px;
-  margin-bottom: 4px;
-}
-
+.agent-name { font-family: 'Bebas Neue', sans-serif; font-size: 15px; letter-spacing: 1px; margin-bottom: 4px; }
 .agent-role { font-size: 10px; color: var(--muted); line-height: 1.5; }
 .agent-status { font-size: 10px; font-family: 'DM Mono', monospace; margin-top: 8px; min-height: 14px; color: var(--muted); }
-
-.log-feed {
-  background: var(--ink);
-  padding: 20px;
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  line-height: 1.9;
-  max-height: 220px;
-  overflow-y: auto;
-  margin-bottom: 32px;
-}
-
+.log-feed { background: var(--ink); padding: 20px; font-family: 'DM Mono', monospace; font-size: 11px; line-height: 1.9; max-height: 220px; overflow-y: auto; margin-bottom: 32px; }
 .log-line { opacity: 0; animation: appear 0.2s forwards; }
-.log-a { color: #ff9985; }
-.log-b { color: #85b8ff; }
-.log-c { color: #85ffb8; }
-.log-d { color: #c4b5fd; }
-.log-sys { color: #555; }
-
+.log-a { color: #ff9985; } .log-b { color: #85b8ff; } .log-c { color: #85ffb8; } .log-d { color: #c4b5fd; } .log-sys { color: #555; }
 @keyframes appear { from{opacity:0} to{opacity:1} }
-
 .results-section { display: none; }
 .results-section.visible { display: block; }
-
-.results-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 12px;
-  margin-bottom: 24px;
-}
-
-.results-header h2 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 32px;
-  letter-spacing: 1px;
-}
-
-.results-header span {
-  font-size: 11px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-.cars-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 32px;
-}
-
-.car-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  opacity: 0;
-  animation: slideup 0.4s forwards;
-}
-
-@keyframes slideup {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.car-rank {
-  background: var(--ink);
-  color: white;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 13px;
-  letter-spacing: 2px;
-  padding: 6px 14px;
-  display: flex;
-  justify-content: space-between;
-}
-
+.results-header { display: flex; align-items: baseline; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 24px; }
+.results-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 1px; }
+.results-header span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+.cars-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+.car-card { background: var(--surface); border: 1px solid var(--border); overflow: hidden; opacity: 0; animation: slideup 0.4s forwards; }
+@keyframes slideup { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.car-rank { background: var(--ink); color: white; font-family: 'Bebas Neue', sans-serif; font-size: 13px; letter-spacing: 2px; padding: 6px 14px; display: flex; justify-content: space-between; }
 .car-rank.top { background: var(--accent); }
-
-.car-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-  background: var(--bg);
-}
-
-.car-img-placeholder {
-  width: 100%;
-  height: 160px;
-  background: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-}
-
+.car-img { width: 100%; height: 160px; object-fit: cover; display: block; background: var(--bg); }
+.car-img-placeholder { width: 100%; height: 160px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 40px; }
 .car-body { padding: 16px; }
-
 .car-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; line-height: 1.3; }
-
-.car-price {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 22px;
-  color: var(--accent);
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-}
-
+.car-price { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--accent); letter-spacing: 1px; margin-bottom: 10px; }
 .car-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
-
-.car-tag {
-  font-size: 10px;
-  padding: 3px 8px;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
+.car-tag { font-size: 10px; padding: 3px 8px; border: 1px solid var(--border); color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
 .car-tag.warn { border-color: #c8412a; color: #c8412a; }
-
-.car-verdict {
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.6;
-  border-top: 1px solid var(--border);
-  padding-top: 10px;
-}
-
-.car-link {
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 11px;
-  color: var(--accent);
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
-}
-
-.synthesis-box {
-  border: 2px solid var(--ink);
-  padding: 28px;
-  background: var(--surface);
-}
-
-.synthesis-box h3 {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 24px;
-  letter-spacing: 1px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.synthesis-box h3::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--border);
-}
-
-.synthesis-text {
-  font-size: 13px;
-  line-height: 1.9;
-  color: #444;
-  white-space: pre-wrap;
-}
-
-.cursor-blink {
-  display: inline-block;
-  width: 7px; height: 14px;
-  background: var(--ink);
-  animation: blink 0.7s infinite;
-  vertical-align: middle;
-}
-
+.car-verdict { font-size: 12px; color: var(--muted); line-height: 1.6; border-top: 1px solid var(--border); padding-top: 10px; }
+.car-link { display: inline-block; margin-top: 10px; font-size: 11px; color: var(--accent); text-decoration: none; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+.synthesis-box { border: 2px solid var(--ink); padding: 28px; background: var(--surface); }
+.synthesis-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 24px; letter-spacing: 1px; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.synthesis-box h3::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+.synthesis-text { font-size: 13px; line-height: 1.9; color: #444; white-space: pre-wrap; }
+.cursor-blink { display: inline-block; width: 7px; height: 14px; background: var(--ink); animation: blink 0.7s infinite; vertical-align: middle; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-
-.disclaimer {
-  font-size: 10px;
-  color: var(--muted);
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-  line-height: 1.6;
-}
+.disclaimer { font-size: 10px; color: var(--muted); margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border); line-height: 1.6; }
+.login-box { text-align: center; padding: 60px 0; }
+.login-box p { font-size: 13px; color: var(--muted); margin-bottom: 24px; line-height: 1.8; }
+.login-btn { background: var(--accent); color: white; font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 3px; padding: 14px 40px; text-decoration: none; display: inline-block; transition: background 0.15s; }
+.login-btn:hover { background: var(--ink); }
+.error-msg { color: #c8412a; font-size: 13px; margin-bottom: 16px; font-family: 'DM Mono', monospace; }
 </style>
 </head>
 <body>
 <div class="page">
-
   <div class="masthead">
     <h1>CAR<br>AGENTS</h1>
     <div class="sub">Sistema multi-agente<br>MercadoLibre Argentina<br>+ Claude AI</div>
   </div>
 
-  <div class="search-form">
-    <div class="field">
-      <label>Presupuesto máximo (USD)</label>
-      <input type="number" id="budget" value="18000" min="1000" step="500">
-    </div>
-    <div class="field">
-      <label>Marca (opcional)</label>
-      <input type="text" id="brand" placeholder="Toyota, VW, Ford...">
-    </div>
-    <div class="field">
-      <label>Año mínimo</label>
-      <input type="number" id="yearMin" value="2018" min="2000" max="2025">
-    </div>
+  <!-- Login box (shown when no token) -->
+  <div class="login-box" id="loginBox" style="display:none">
+    <div class="error-msg" id="errorMsg"></div>
+    <p>Conectá tu cuenta de MercadoLibre para buscar autos.<br>Solo usamos tu sesión para leer publicaciones — no modificamos nada.</p>
+    <a href="/api/login" class="login-btn">CONECTAR CON MERCADOLIBRE</a>
   </div>
 
-  <div class="prefs-row">
-    <label class="pref-chip"><input type="checkbox" id="pref-auto" checked> Automático</label>
-    <label class="pref-chip"><input type="checkbox" id="pref-5p" checked> 5 puertas</label>
-    <label class="pref-chip"><input type="checkbox" id="pref-nafta"> Nafta</label>
-    <label class="pref-chip"><input type="checkbox" id="pref-diesel"> Diésel</label>
-    <label class="pref-chip"><input type="checkbox" id="pref-hibrido"> Híbrido/Eléctrico</label>
-    <label class="pref-chip"><input type="checkbox" id="pref-suv"> SUV/Crossover</label>
-    <label class="pref-chip"><input type="checkbox" id="pref-sedan"> Sedán/Hatchback</label>
+  <!-- Search UI (shown when token exists) -->
+  <div id="searchUI">
+    <div class="search-form">
+      <div class="field">
+        <label>Presupuesto máximo (USD)</label>
+        <input type="number" id="budget" value="18000" min="1000" step="500">
+      </div>
+      <div class="field">
+        <label>Marca (opcional)</label>
+        <input type="text" id="brand" placeholder="Toyota, VW, Ford...">
+      </div>
+      <div class="field">
+        <label>Año mínimo</label>
+        <input type="number" id="yearMin" value="2018" min="2000" max="2025">
+      </div>
+    </div>
+    <div class="prefs-row">
+      <label class="pref-chip"><input type="checkbox" id="pref-auto" checked> Automático</label>
+      <label class="pref-chip"><input type="checkbox" id="pref-5p" checked> 5 puertas</label>
+      <label class="pref-chip"><input type="checkbox" id="pref-nafta"> Nafta</label>
+      <label class="pref-chip"><input type="checkbox" id="pref-diesel"> Diésel</label>
+      <label class="pref-chip"><input type="checkbox" id="pref-hibrido"> Híbrido/Eléctrico</label>
+      <label class="pref-chip"><input type="checkbox" id="pref-suv"> SUV/Crossover</label>
+      <label class="pref-chip"><input type="checkbox" id="pref-sedan"> Sedán/Hatchback</label>
+    </div>
+    <button class="run-btn" id="runBtn" onclick="startAgents()">INICIAR AGENTES</button>
   </div>
-
-  <button class="run-btn" id="runBtn" onclick="startAgents()">INICIAR AGENTES</button>
 
   <div class="pipeline" id="pipeline">
     <div class="pipeline-label">Pipeline de agentes</div>
     <div class="agents-row">
-      <div class="agent-card" id="card-a">
-        <div class="agent-dot"></div>
-        <div class="agent-name">BUSCADOR</div>
-        <div class="agent-role">Consulta ML via API propia y filtra resultados</div>
-        <div class="agent-status" id="status-a">—</div>
-      </div>
-      <div class="agent-card" id="card-b">
-        <div class="agent-dot"></div>
-        <div class="agent-name">ANALISTA</div>
-        <div class="agent-role">Evalúa cada resultado contra tus criterios. Puntúa y rankea</div>
-        <div class="agent-status" id="status-b">—</div>
-      </div>
-      <div class="agent-card" id="card-c">
-        <div class="agent-dot"></div>
-        <div class="agent-name">CRÍTICO</div>
-        <div class="agent-role">Busca lo que el Analista pasó por alto. Red flags y costos ocultos</div>
-        <div class="agent-status" id="status-c">—</div>
-      </div>
-      <div class="agent-card" id="card-d">
-        <div class="agent-dot"></div>
-        <div class="agent-name">SÍNTESIS</div>
-        <div class="agent-role">Produce recomendación final considerando todos los inputs</div>
-        <div class="agent-status" id="status-d">—</div>
-      </div>
+      <div class="agent-card" id="card-a"><div class="agent-dot"></div><div class="agent-name">BUSCADOR</div><div class="agent-role">Consulta ML via API propia y filtra resultados</div><div class="agent-status" id="status-a">—</div></div>
+      <div class="agent-card" id="card-b"><div class="agent-dot"></div><div class="agent-name">ANALISTA</div><div class="agent-role">Evalúa cada resultado contra tus criterios. Puntúa y rankea</div><div class="agent-status" id="status-b">—</div></div>
+      <div class="agent-card" id="card-c"><div class="agent-dot"></div><div class="agent-name">CRÍTICO</div><div class="agent-role">Busca lo que el Analista pasó por alto. Red flags y costos ocultos</div><div class="agent-status" id="status-c">—</div></div>
+      <div class="agent-card" id="card-d"><div class="agent-dot"></div><div class="agent-name">SÍNTESIS</div><div class="agent-role">Produce recomendación final considerando todos los inputs</div><div class="agent-status" id="status-d">—</div></div>
     </div>
     <div class="log-feed" id="logFeed"></div>
   </div>
@@ -451,15 +145,31 @@ body {
     <div class="synthesis-box">
       <h3>VEREDICTO FINAL</h3>
       <div class="synthesis-text" id="synthesisText"></div>
-      <div class="disclaimer">
-        Datos en tiempo real de MercadoLibre Argentina. Verificá el estado del vehículo antes de cualquier transacción.
-      </div>
+      <div class="disclaimer">Datos en tiempo real de MercadoLibre Argentina. Verificá el estado del vehículo antes de cualquier transacción.</div>
     </div>
   </div>
-
 </div>
 
 <script>
+// ── Auth ──────────────────────────────────────────────────────────────────────
+const urlParams = new URLSearchParams(window.location.search);
+const ML_TOKEN = urlParams.get('token');
+const authError = urlParams.get('error');
+
+// Limpiar URL
+if (ML_TOKEN || authError) window.history.replaceState({}, '', '/');
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (!ML_TOKEN) {
+    document.getElementById('searchUI').style.display = 'none';
+    document.getElementById('loginBox').style.display = 'block';
+    if (authError) {
+      document.getElementById('errorMsg').textContent = `Error al conectar: ${authError}. Intentá de nuevo.`;
+    }
+  }
+});
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 function log(text, agent = 'sys') {
   const feed = document.getElementById('logFeed');
   const line = document.createElement('div');
@@ -491,6 +201,7 @@ async function callClaude(prompt) {
   return data.content?.[0]?.text || '';
 }
 
+// ── Agent pipeline ────────────────────────────────────────────────────────────
 async function startAgents() {
   const budget = parseInt(document.getElementById('budget').value) || 18000;
   const brand = document.getElementById('brand').value.trim();
@@ -540,8 +251,7 @@ async function startAgents() {
   for (const q of queries) {
     log(`Consultando: "${q}"`, 'a');
     try {
-      // Calls OUR serverless function, not ML directly
-      const params = new URLSearchParams({ q, price_max: budget, year_min: yearMin });
+      const params = new URLSearchParams({ q, price_max: budget, year_min: yearMin, token: ML_TOKEN });
       const resp = await fetch(`/api/search?${params}`);
       if (!resp.ok) throw new Error(`API error ${resp.status}`);
       const data = await resp.json();
@@ -553,7 +263,6 @@ async function startAgents() {
     await sleep(300);
   }
 
-  // Deduplicate
   const seen = new Set();
   allItems = allItems.filter(item => {
     if (seen.has(item.id)) return false;
@@ -639,7 +348,6 @@ Respondé SOLO JSON válido:
 
   setAgent('c', 'done', 'Revisión lista');
 
-  // Merge y rerank
   const criticaMap = {};
   (criticas.criticas || []).forEach(c => { criticaMap[c.id] = c; });
   seleccionados = seleccionados.map(s => {
@@ -658,22 +366,18 @@ Respondé SOLO JSON válido:
 
   const grid = document.getElementById('carsGrid');
   grid.innerHTML = '';
-
   seleccionados.forEach((auto, idx) => {
     const mlItem = allItems.find(i => i.id === auto.id);
     const thumb = mlItem?.thumbnail?.replace('http://', 'https://') || '';
     const card = document.createElement('div');
     card.className = 'car-card';
     card.style.animationDelay = `${idx * 0.1}s`;
-
     card.innerHTML = `
       <div class="car-rank ${idx === 0 ? 'top' : ''}">
         <span>${idx === 0 ? 'MEJOR OPCIÓN' : `#${idx + 1}`}</span>
         <span>SCORE ${auto.puntaje_final}/10</span>
       </div>
-      ${thumb
-        ? `<img class="car-img" src="${thumb}" alt="${auto.titulo}" onerror="this.style.display='none'">`
-        : `<div class="car-img-placeholder">🚗</div>`}
+      ${thumb ? `<img class="car-img" src="${thumb}" alt="${auto.titulo}" onerror="this.style.display='none'">` : `<div class="car-img-placeholder">🚗</div>`}
       <div class="car-body">
         <div class="car-title">${auto.titulo}</div>
         <div class="car-price">$${auto.precio?.toLocaleString()} ${auto.moneda || 'USD'}</div>
@@ -687,8 +391,7 @@ Respondé SOLO JSON válido:
           ${auto.inspeccion ? `<br><br><strong>Verificar:</strong> ${auto.inspeccion}` : ''}
         </div>
         <a class="car-link" href="${auto.url}" target="_blank">Ver en MercadoLibre →</a>
-      </div>
-    `;
+      </div>`;
     grid.appendChild(card);
   });
 
@@ -722,7 +425,6 @@ Escribí un veredicto directo de máximo 150 palabras. Sin markdown, sin listas.
     const newCursor = document.createElement('span');
     newCursor.className = 'cursor-blink';
     synthEl.appendChild(newCursor);
-
     const interval = setInterval(() => {
       if (i < finalText.length) {
         synthEl.insertBefore(document.createTextNode(finalText[i]), newCursor);
@@ -732,7 +434,6 @@ Escribí un veredicto directo de máximo 150 palabras. Sin markdown, sin listas.
         newCursor.remove();
       }
     }, 14);
-
   } catch(e) {
     cursor.remove();
     synthEl.textContent = 'Error generando síntesis.';

@@ -23,7 +23,12 @@ export default async function handler(req, res) {
     }
 
     const url = `https://api.mercadolibre.com/sites/MLA/search?${params}`;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+  headers: {
+    'User-Agent': 'Mozilla/5.0 (compatible; car-agents/1.0)',
+    'Accept': 'application/json',
+  }
+});
 
     if (!response.ok) {
       throw new Error(`ML API error: ${response.status}`);

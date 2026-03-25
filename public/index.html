@@ -153,7 +153,8 @@ body { background: var(--bg); color: var(--ink); font-family: 'DM Sans', sans-se
 <script>
 // ── Auth ──────────────────────────────────────────────────────────────────────
 const urlParams = new URLSearchParams(window.location.search);
-const ML_TOKEN = urlParams.get('token');
+const ML_TOKEN = urlParams.get('token') || sessionStorage.getItem('ml_token');
+if (urlParams.get('token')) sessionStorage.setItem('ml_token', urlParams.get('token'));
 const authError = urlParams.get('error');
 
 // Limpiar URL
